@@ -2,7 +2,7 @@ import React from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
 import styles from './Styles';
 
-export default class AppPicker extends React.Component {
+export default class Loading extends React.Component {
 	// constructor (props) { super(props) }
 
 	render() {

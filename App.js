@@ -1,3 +1,37 @@
+import React from 'react'
+import { Provider } from 'react-redux'
+import { createStore, applyMiddleware } from 'redux'
+
+import thunkMiddleware from 'redux-thunk';
+
+import { fetchInspection } from './action_creators';
+import reducer from './reducers'
+import ConnectedLandingPage from './LandingPage'
+
+let store = createStore(reducer, {}, applyMiddleware(thunkMiddleware))
+store.dispatch(fetchInspection)
+
+export default class App extends React.Component {
+	render () {
+		return (
+			<Provider store={ store }>
+				<ConnectedLandingPage />
+			</Provider>
+		)
+	}
+}
+
+/*
+ToDo:
+	form validation for the inspection
+	move the inspection state here and pass it to the InspectionForm so that I can submit from the top level
+	submit form to server
+	build server route to get form and insert it into DB
+	build test script that inserts many inspections into database for data analysis purposes
+*/
+
+
+/*
 import React from 'react';
 import { Image, Keyboard, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import Loading from './Loading';
@@ -17,14 +51,15 @@ export default class App extends React.Component {
 		this.getInspection();
 	}
 
-	getInspection () {
-		fetch(
+	async getInspection () {
+		res = await fetch(
 			"https://sunkaizen-server.herokuapp.com/inspection-json",
 			{ method: "GET", headers: { "accept": "application-json" } }
-		)
-			.then(res => { return res.json() })
-			.then(res => { this.setState({ inspection: res }) });
+		);
+		res_json = await res.json();
+		this.setState({ inspection: res_json });
 	}
+*/
 
 	/*
 	ToDo:
@@ -35,6 +70,7 @@ export default class App extends React.Component {
 		build test script that inserts many inspections into database for data analysis purposes
 	*/
 
+/*
 	render() {
 		return (
 			<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -58,3 +94,4 @@ export default class App extends React.Component {
 		);
 	}
 }
+*/

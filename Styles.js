@@ -12,6 +12,10 @@ export default styles = StyleSheet.create({
 		resizeMode: "cover",
 		flex: 1
 	},
+	smallImage: {
+		height: 100,
+		width: 100
+	},
 	picker: {
 		backgroundColor: "rgba(255,255,255,0.3)"
 	},
