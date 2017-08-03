@@ -11,7 +11,7 @@ export const FORM_POSTED = "FORM_POSTED"
 export const FORM_SAVED = "FORM_SAVED"
 
 //	ACTION CREATORS
-export function setFormState (path, newState) { return { type: SET_FORM_STATE, path, newState } }
+export function setFormState (category, name, newState) { return { type: SET_FORM_STATE, category, name, newState } }
 export function loaded () { return { type: LOADED } }
 export function user (action) { return { type: USER, action } }
 export function createForm () { return { type: CREATE_FORM } }
@@ -20,15 +20,14 @@ export function createForm () { return { type: CREATE_FORM } }
 function getInspection () { return { type: REQUEST_INSPECTION } }
 function gotInspection (inspection) { return { type: RECEIVE_INSPECTION, inspection } }
 
-export async function fetchInspection () {
-	return dispatch => {
+export function fetchInspection () {
+	return async (dispatch) => {
 		dispatch(getInspection())
 		res = await fetch(
 			"https://sunkaizen-server.herokuapp.com/inspection-json",
 			{ method: "GET", headers: { "accept": "application-json" } }
 		)
 		json_res = await res.json()
-
 		dispatch(gotInspection(json_res))
 	}
 }
@@ -36,8 +35,8 @@ export async function fetchInspection () {
 function formPosted () { return { type: FORM_POSTED } }
 function formSaved (statusMessage) { return { type: FORM_SAVED, statusMessage} }
 
-export async function sendForm (form) { 
-	return dispatch => {
+export function sendForm (form) { 
+	return async (dispatch) => {
 		dispatch(formPosted())
 		res = await fetch(
 			"https://sunkaizen-server.herokuapp.com/form",
@@ -46,5 +45,6 @@ export async function sendForm (form) {
 		json_res = await res.json()
 
 		dispatch(formSaved(json_res))
+		dispatch(createForm())
 	}
 }

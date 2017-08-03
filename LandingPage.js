@@ -12,8 +12,8 @@ import { connect } from 'react-redux';
 import { submitInspection } from './action_creators';
 
 
-const mapStateToProps = state => { return { inspection: state.inspection, form: state.form } }
-const mapDispatchToProps = (dispatch, ownProps) => { return onSubmit: () => { sendForm(ownProps.form) } }
+const mapStateToProps = state => { return { inspection: state.inspection, form: state.inspection.form.categories } }
+const mapDispatchToProps = (dispatch, ownProps) => { return { onSubmit: () => { sendForm(ownProps.form) } } }
 
 const LandingPage = ({ inspection, form, onSubmit }) => (
 	<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -22,14 +22,14 @@ const LandingPage = ({ inspection, form, onSubmit }) => (
 				keyboardDismissMode="on-drag"
 				style={styles.container}
 			>
-				{ inspection.items.length > 0 && (<InspectionForm app={ inspection.items } />) }
+				{ !inspection.isFetching && inspection.items.length && (<InspectionForm items={ inspection.items } />) }
+				{ !inspection.isFetching && !inspection.items.length && (<Err />)}
 				{ inspection.isFetching && (<Loading />) }
-				{ !inspection.isFetching && inspection.items.length < 1 && (<Err />)}
 			</ScrollView>
 			<TouchableOpacity 
 				style={styles.buttonContainer}
 				accessabilityLabel="submit this inspection to the server" 
-				onPress={ (event) => { onSubmit }) } }
+				onPress={ (event) => { onSubmit } }
 			>
 				<Text style={[styles.button, styles.text]} >Submit Inspection</Text>
 			</TouchableOpacity>
@@ -37,6 +37,6 @@ const LandingPage = ({ inspection, form, onSubmit }) => (
 	</TouchableWithoutFeedback>
 );
 
-LandingPage.propTypes = { inspection: PropTypes.object.isRequired }
+// LandingPage.propTypes = { inspection: PropTypes.function.isRequired }
 
-export default const ConnectedLandingPage = connect(mapStateToProps)(LandingPage)
+export default ConnectedLandingPage = connect(mapStateToProps)(LandingPage)

@@ -1,28 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'; 
-import { Picker } from 'react-native';
+import { TextInput, Keyboard } from 'react-native';
 
 import { setFormState } from './action_creators';
 import styles from './Styles';
 
 //	e.nativeEvent.value may not be the correct property
-const mapDispatchToProps.= (dispatch, ownProps) => { return { onSubmit: (e) => setFormState([ownProps.category, ownProps.name], e.nativeEvent.value) } }
+const mapDispatchToProps = (dispatch, ownProps) => { return { onSubmit: (e) => setFormState([ownProps.category, ownProps.name], e.nativeEvent.value) } }
 
 const AppTextInput = ({ onSubmit, category, placeholder, name, type }) => {
-	<Picker style={[styles.transparentBackground, styles.text]} placeholder={ placeholder } placeholderTextColor={ grey } onChangeText={ onSubmit } onSubmitEditing={ Keyboard.dismiss } >
-		options.map((option, index) => { return <Picker.Item key={ index } label={ option } value={ option } /> });
-	</Picker>
+	return (<TextInput 
+		style={[styles.transparentBackground, styles.text]} 
+		placeholder={ placeholder } 
+		placeholderTextColor={ "grey" } 
+		onChangeText={ onSubmit } 
+		onSubmitEditing={ Keyboard.dismiss } 
+	/>)
 }
 
 AppTextInput.propTypes = {
+	onSubmit: PropTypes.func.isRequired,
 	category: PropTypes.string.isRequired,
 	placeholder: PropTypes.string.isRequired,
 	name: PropTypes.string.isRequired,
 	type: PropTypes.oneOf(["textInput"]).isRequired
 };
 
-const ConnectedAppTextInput = connect(mapDispatchToProps)
+const ConnectedAppTextInput = connect(mapDispatchToProps)(AppTextInput)
 export default ConnectedAppTextInput
 
 /*

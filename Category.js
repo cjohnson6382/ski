@@ -14,19 +14,12 @@ const componentMap = {
 };
 
 const Category = ({ category }) => {
-	<View>{ category.values.map((item, index) => {
+	return <View>{ category.values.map((item, index) => {
 		let ComponentType = componentMap[item.type]
 		return <ComponentType key={ index } { ...item } category={ category.name } />
 	}) }</View>
 }
 
-Category.propTypes = { category: PropTypes.object.isRequred }
+Category.propTypes = { category: PropTypes.object }
 
 export default Category
-
-/*
-	I think I need to move this function that I'm trying to map down to the individual component level
-*/
-// const mapDispatchToProps = (dispatch) => {
-// 	return { onChange: (e) => dispatch() }
-// }

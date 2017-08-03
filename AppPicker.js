@@ -1,30 +1,41 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux'; 
-import { Picker } from 'react-native';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux' 
+import { Picker } from 'react-native'
 
-import styles from './Styles';
-import { setFormState } from './action_creators';
+import styles from './Styles'
+import { setFormState } from './action_creators'
 
-//	e.nativeEvent.value may not be the correct property
-const mapDispatchToProps.= (dispatch, ownProps) => { return { onSubmit: (e) => setFormState([ownProps.category, ownProps.name], e.nativeEvent.value) } }
 
-const AppPicker = ({ onSubmit, category, options, default, name, type }) => {
-	<Picker style={styles.transparentBackground} itemStyle={styles.text} selectedValue={ default } onValueChange={ onSubmit } >
-		options.map((option, index) => { return <Picker.Item key={ index } label={ option } value={ option } /> });
-	</Picker>
+const mapStateToProps = state => { 
+	return { form: state.inspection.form } 
+}
+const mapDispatchToProps = (dispatch, ownProps) => { return { onSubmit: (e) => { dispatch(setFormState(ownProps.category, ownProps.name, e)) } } }
+
+const AppPicker = ({ form, onSubmit, category, options, selected, name, type }) => {
+	return (
+		<Picker 
+			style={styles.transparentBackground} 
+			itemStyle={styles.text} 
+			selectedValue={ form.categories[category] ? form.categories[category][name] : selected } 
+			onValueChange={ onSubmit } 
+		>
+			{ options.map((option, index) => { return <Picker.Item key={ index } label={ option } value={ option } /> }) }
+		</Picker>
+	)
 }
 
-
 AppPicker.propTypes = {
+	form: PropTypes.object.isRequired,
+	onSubmit: PropTypes.func.isRequired,
 	category: PropTypes.string.isRequired,
 	options: PropTypes.array.isRequired,
-	default: PropTypes.string.isRequired,
+	selected: PropTypes.string.isRequired,
 	name: PropTypes.string.isRequired,
 	type: PropTypes.oneOf(["picker"]).isRequired
 };	
 
-const ConnectedAppPicker = connect(mapDispatchToProps)(AppPicker)
+const ConnectedAppPicker = connect(mapStateToProps, mapDispatchToProps)(AppPicker)
 export default ConnectedAppPicker
 
 /*

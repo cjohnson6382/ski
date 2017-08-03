@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 
 import { View } from 'react-native';
 import styles from './Styles';
+import Category from './Category';
 
-const InspectionForm = ({ inspection }) => (<View>{ inspection.map(category => <Category category={ category } />)}</View>)
+const InspectionForm = ({ items }) => (<View>{ items.map((category, index) => <Category key={ index } category={ category } />)}</View>)
 
-InspectionForm.propTypes = { inspection: PropTypes.array.isRequred }
+InspectionForm.propTypes = { items: PropTypes.array }
 
 export default InspectionForm
