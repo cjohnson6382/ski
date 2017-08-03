@@ -29,6 +29,7 @@ export function fetchInspection () {
 		)
 		json_res = await res.json()
 		dispatch(gotInspection(json_res))
+		// dispatch(createForm())
 	}
 }
 
@@ -36,6 +37,7 @@ function formPosted () { return { type: FORM_POSTED } }
 function formSaved (statusMessage) { return { type: FORM_SAVED, statusMessage} }
 
 export function sendForm (form) { 
+	console.log("in sendForm action creator, form: ", form)
 	return async (dispatch) => {
 		dispatch(formPosted())
 		res = await fetch(
@@ -43,8 +45,6 @@ export function sendForm (form) {
 			{ method: "POST", body: JSON.stringify(form), mode: "cors", headers: { "accept": "application-json", "content-type": "application-json" } }
 		)
 		json_res = await res.json()
-
 		dispatch(formSaved(json_res))
-		dispatch(createForm())
 	}
 }

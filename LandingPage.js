@@ -9,11 +9,11 @@ import Err from './Err';
 import styles from './Styles';
 
 import { connect } from 'react-redux'; 
-import { submitInspection } from './action_creators';
+import { sendForm } from './action_creators';
 
 
 const mapStateToProps = state => { return { inspection: state.inspection, form: state.inspection.form.categories } }
-const mapDispatchToProps = (dispatch, ownProps) => { return { onSubmit: () => { sendForm(ownProps.form) } } }
+const mapDispatchToProps = (dispatch, ownProps) => { return { onSubmit: e => dispatch(sendForm(ownProps.form)) } }
 
 const LandingPage = ({ inspection, form, onSubmit }) => (
 	<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -29,7 +29,7 @@ const LandingPage = ({ inspection, form, onSubmit }) => (
 			<TouchableOpacity 
 				style={styles.buttonContainer}
 				accessabilityLabel="submit this inspection to the server" 
-				onPress={ (event) => { onSubmit } }
+				onPress={ onSubmit }
 			>
 				<Text style={[styles.button, styles.text]} >Submit Inspection</Text>
 			</TouchableOpacity>
@@ -39,4 +39,4 @@ const LandingPage = ({ inspection, form, onSubmit }) => (
 
 // LandingPage.propTypes = { inspection: PropTypes.function.isRequired }
 
-export default ConnectedLandingPage = connect(mapStateToProps)(LandingPage)
+export default ConnectedLandingPage = connect(mapStateToProps, mapDispatchToProps)(LandingPage)

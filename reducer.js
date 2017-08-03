@@ -19,7 +19,6 @@ import {
 // }
 
 function form(state = {}, action) {
-	console.log("in form reducer, action: ", action)
 	switch (action.type) {
 		case SET_FORM_STATE: return Object.assign({}, state, { [action.category]: { [action.name]: action.newState } })
 		default: return state;
@@ -33,8 +32,8 @@ function inspection(state = { isFetching: false, failFetch: false, items: [], fo
 		case REQUEST_INSPECTION: return Object.assign({}, state, { isFetching: true }) 
 		case LOADED: return Object.assign({}, state, { isFetching: false })
 		case CREATE_FORM: return Object.assign({}, state, { form: { categories: state.items.keys() } })
-		case FORM_POSTED: return Object.assign({}, state, { form: { formStatus: "Saving Form to Server" } })
-		case FORM_SAVED: return Object.assign({}, state, { form: { formStatus: action.statusMessage } })
+		case FORM_POSTED: return Object.assign({}, state, { formStatus: "Saving Form to Server" })
+		case FORM_SAVED: return Object.assign({}, state, { formStatus: action.statusMessage })
 		default: return state;
 	}
 }

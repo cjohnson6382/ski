@@ -6,8 +6,8 @@ import { TextInput, Keyboard } from 'react-native';
 import { setFormState } from './action_creators';
 import styles from './Styles';
 
-//	e.nativeEvent.value may not be the correct property
-const mapDispatchToProps = (dispatch, ownProps) => { return { onSubmit: (e) => setFormState([ownProps.category, ownProps.name], e.nativeEvent.value) } }
+//	MAKE SURE THAT SETFORMSTATE IS UPDATED TO MATCH THE NEW SIGNATURE, CHANGE THIS TO LOOK LIKE THE APPPICKER COMPONENT
+const mapDispatchToProps = (dispatch, ownProps) => { return { onSubmit: (e) => dispatch(setFormState(ownProps.category, ownProps.name, e)) } }
 
 const AppTextInput = ({ onSubmit, category, placeholder, name, type }) => {
 	return (<TextInput 
@@ -27,7 +27,7 @@ AppTextInput.propTypes = {
 	type: PropTypes.oneOf(["textInput"]).isRequired
 };
 
-const ConnectedAppTextInput = connect(mapDispatchToProps)(AppTextInput)
+const ConnectedAppTextInput = connect(null, mapDispatchToProps)(AppTextInput)
 export default ConnectedAppTextInput
 
 /*
