@@ -24,10 +24,14 @@ export default class App extends React.Component {
 }
 
 /*
+Current Status: 
+	gets an inspection JSON from the server, 
+	parses it into categories/questions; 
+	presents each category and each question in that category -- all on the same view; not separated by category yet
+	when the frontend fetches or posts data to the server, it provides a place to call loading spinners and similar
+
 ToDo:
 	form validation for the inspection
-	move the inspection state here and pass it to the InspectionForm so that I can submit from the top level
-	submit form to server
 	build server route to get form and insert it into DB
 	build test script that inserts many inspections into database for data analysis purposes
 */

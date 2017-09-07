@@ -34,7 +34,7 @@ function inspection(state = { isFetching: false, failFetch: false, items: [], fo
 		case CREATE_FORM: return Object.assign({}, state, { form: { categories: state.items.keys() } })
 		case FORM_POSTED: return Object.assign({}, state, { formStatus: "Saving Form to Server" })
 		case FORM_SAVED: return Object.assign({}, state, { formStatus: action.statusMessage })
-		default: return state;
+		default: return state
 	}
 }
 
